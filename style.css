@@ -1,0 +1,92 @@
+html{
+    overflow: hidden;
+    font-family: "Lato", Helvetica, sans-serif;
+    color: #FFF;
+}
+
+body{
+	overflow: hidden;
+	height: 100%;
+}
+
+h1{
+    font-size: 3rem;
+    color: #FFFFFF;
+    text-shadow: 0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+}
+
+h2{
+    margin-right: 30px;
+    line-height: 10px;
+
+}
+
+.shadow{
+	text-shadow: 0 2px 5px #000;
+	height: 25px;
+}
+
+.w3-light-grey{
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+	height: 25px;
+}
+
+.fire{
+	color: rgb(255, 255, 255);
+	text-shadow: rgb(255, 255, 255) 0px -1px 4px, rgb(255, 255, 0) 0px -2px 10px, rgb(255, 128, 0) 0px -10px 20px, rgb(255, 0, 0) 0px -18px 40px;
+	--darkreader-inline-color: #e8e6e3;
+	--darkreader-inline-bgimage: initial;
+	--darkreader-inline-bgcolor: #262a2b;
+}
+
+#all_bars{
+	position: absolute;
+	bottom: 0;
+	left: 1%;
+	width: 21%;
+	font-family: inherit;
+	font-style: italic;
+	transition: 0.3s;
+}
+
+#corners_emotes{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: 0.3s;
+}
+
+#emote1{
+	position: absolute;
+	top: -28px;
+	left: -30px;
+	width: 200px;
+	transform: rotate(135deg);
+}
+
+#emote2{
+	position: absolute;
+	top: -28px;
+	right: -30px;
+	width: 200px;
+	transform: rotate(-135deg);
+}
+
+#emote3{
+	position: absolute;
+	bottom: -30px;
+	left: -30px;
+	width: 200px;
+	transform: rotate(45deg);
+}
+
+#emote4{
+	position: absolute;
+	bottom: -30px;
+	right: -30px;
+	width: 200px;
+	transform: rotate(-45deg);
+}
