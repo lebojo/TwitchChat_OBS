@@ -18,17 +18,20 @@ h1{
 h2{
     margin-right: 30px;
     line-height: 10px;
-
 }
 
 .shadow{
-	text-shadow: 0 2px 5px #000;
+	text-shadow: 0 0 5px #000;
 	height: 25px;
+	color: #FFF;
+	background: rgb(120,22,198);
+	background: linear-gradient(90deg, rgba(120,22,198,1) 0%, rgba(228,108,60,1) 100%);
 }
 
 .w3-light-grey{
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
 	height: 25px;
+	margin-bottom: 10px;
 }
 
 .fire{
@@ -41,11 +44,12 @@ h2{
 
 #all_bars{
 	position: absolute;
-	bottom: 0;
+	bottom: 1%;
 	left: 1%;
 	width: 21%;
 	font-family: inherit;
 	font-style: italic;
+	font-weight: bold;
 	transition: 0.3s;
 }
 
