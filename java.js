@@ -1,5 +1,9 @@
 const tw = new tmi.Client({ channels: [ 'legoyave' ]});
-const max_votes = 1;
+const max_votes = 30;
+
+const cam_scene = "Blabla";
+const cam_source = "CAMERA";
+const this_source = "TEST_GOYAVE";
 
 var votes ={
 	goaled: false,
@@ -19,12 +23,15 @@ const obs = new OBSWebSocket();
 obs.connect({address: 'localhost:4444'});
 
 obs.on('ConnectionOpened', () => {
-
-	obs.send('GetSceneItemProperties', {'scene-name': "Blabla", 'item': "CAMERA"})
+	obs.send('GetSceneItemProperties', {'scene-name': "Blabla", 'item': cam_source})
 		.then(data => {
 		cam.x = data.position.x;
 		cam.y = data.position.y;
 	});
+	create_filters();
+	setTimeout(function(){
+		reset_filters();
+	}, 500);
 });
 
 tw.connect().catch(console.error);
@@ -83,13 +90,13 @@ function animation(type, time)
 			hearts(time);
 			break;
 		case 'hype':
-			wiggle("Blabla", "CAMERA", time);
+			wiggle("Blabla", cam_source, time);
 			break;
 		case 'party':
-			wiggle("Blabla", "CAMERA", time);
+			confet(time);
 			break;
 		case 'goyave':
-			wiggle("Blabla", "CAMERA", time);
+			goyave(time);
 			break;
 	}
 
@@ -141,6 +148,11 @@ function wiggle(scene, source, time)
 
 function hearts(time)
 {
+	obs.send('SetSourceFilterVisibility', {
+		'sourceName': cam_source,
+		'filterName': "love",
+		'filterEnabled': true
+	})
 	const tt = setInterval(function(){
 		if (document.getElementById("heart").style.opacity == 0.5)
 			document.getElementById("heart").style.opacity = 0.1;
@@ -150,6 +162,44 @@ function hearts(time)
 	setTimeout(function(){
 		clearInterval(tt);
 		document.getElementById("heart").style.opacity = 0;
+		reset_filters();
+	}, time);
+}
+
+function confet(time)
+{
+	let vid = document.createElement("video");
+
+	obs.send('SetSourceFilterVisibility', {
+		'sourceName': this_source,
+		'filterName': "lumi",
+		'filterEnabled': true
+	});
+	vid.src = "assets/confet.mp4";
+	document.body.appendChild(vid);
+	vid.play();
+	setTimeout(function(){
+		document.body.removeChild(vid);
+	}, time);
+}
+
+function goyave(time)
+{
+	obs.send('SetSourceFilterVisibility', {
+		'sourceName': cam_source,
+		'filterName': "goyave",
+		'filterEnabled': true
+	});
+	const tt = setInterval(function(){
+		obs.send('SetSceneItemProperties', {
+			'scene-name': "Blabla",
+			'item': cam_source,
+			'rot': 60.0
+		})
+	}, 500);
+	setTimeout(function(){
+		clearInterval(tt);
+		reset_filters();
 	}, time);
 }
 
@@ -157,4 +207,70 @@ function ri(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function create_filters(){
+	obs.send('AddFilterToSource', {
+		'sourceName': cam_source,
+		'filterName': "nigga",
+		'filterType': "color_filter",
+		'filterSettings': {
+			'contrast': -2
+		}
+	});
+	obs.send('AddFilterToSource', {
+		'sourceName': cam_source,
+		'filterName': "love",
+		'filterType': "color_filter",
+		'filterSettings': {
+			'gamma': 0.30,
+			'contrast': -0.40,
+			'brightness': 0.32,
+			'saturation': 2.15,
+			'color': 16623103
+		}
+	});
+	obs.send('AddFilterToSource', {
+		'sourceName': cam_source,
+		'filterName': "goyave",
+		'filterType': "color_filter",
+		'filterSettings': {
+			'saturation': 0.6,
+			'color': 8388607
+		}
+	});
+	obs.send('AddFilterToSource', {
+		'sourceName': this_source,
+		'filterName': "lumi",
+		'filterType': "luma_key_filter",
+		'filterSettings': {
+			"luma_max": 1.0,
+			"luma_max_smooth": 0.0,
+			"luma_min": 0.4
+		}
+	});
+}
+
+function reset_filters()
+{
+	obs.send('SetSourceFilterVisibility', {
+		'sourceName': cam_source,
+		'filterName': "nigga",
+		'filterEnabled': false
+	});
+	obs.send('SetSourceFilterVisibility', {
+		'sourceName': cam_source,
+		'filterName': "love",
+		'filterEnabled': false
+	});
+	obs.send('SetSourceFilterVisibility', {
+		'sourceName': cam_source,
+		'filterName': "goyave",
+		'filterEnabled': false
+	});
+	obs.send('SetSourceFilterVisibility', {
+		'sourceName': this_source,
+		'filterName': "lumi",
+		'filterEnabled': false
+	});
 }
