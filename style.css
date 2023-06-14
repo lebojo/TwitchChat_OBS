@@ -90,3 +90,63 @@ h2{
 	width: 200px;
 	transform: rotate(-45deg);
 }
+
+.heart-container {
+	position: absolute;
+	top: 50%;
+	left: 40%;
+	transform: translate(-50%, -50%);
+	animation: heartBeat 1s infinite;
+	transition: 0.5s;
+	opacity: 0;
+  }
+  
+  .heart {
+	width: 100px;
+	height: 100px;
+	background-color: red;
+	position: relative;
+	transform: rotate(-45deg);
+	box-shadow: 0 0 5px 2px red;
+  }
+  
+  .heart:before,
+  .heart:after {
+	content: "";
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	background-color: red;
+  }
+  
+  .heart:before {
+	border-radius: 50px 50px 0 0;
+	top: -50px;
+	left: 0;
+  }
+  
+  .heart:after {
+	border-radius: 50px 50px 50px 0;
+	top: 0;
+	left: 50px;
+  }
+  
+
+  @keyframes heartBeat {
+	0% {
+	  transform: scale(5);
+	}
+	45% {
+	  transform: scale(5);
+	}
+	50% {
+	  transform: scale(5.3);
+	}
+	60% {
+	  transform: scale(5);
+	}
+	100% {
+	  transform: scale(5);
+	}
+  }
+  

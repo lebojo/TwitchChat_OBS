@@ -80,7 +80,7 @@ function animation(type, time)
 
 	switch(type){
 		case 'love':
-			wiggle("Blabla", "CAMERA", time);
+			hearts(time);
 			break;
 		case 'hype':
 			wiggle("Blabla", "CAMERA", time);
@@ -116,7 +116,6 @@ function change_img(type)
 function wiggle(scene, source, time)
 {
 	var amplifier = 20;
-	msg("Wiggle");
 	const tt = setInterval(function(){
 			obs.send('SetSceneItemProperties', {
 				'scene-name': scene,
@@ -129,8 +128,6 @@ function wiggle(scene, source, time)
 			}, 10);
 	setTimeout(function(){
 		clearInterval(tt);
-		clearInterval(neg);
-		msg("Wiggle end");
 		obs.send('SetSceneItemProperties', {
 			'scene-name': scene,
 			'item': source,
@@ -142,23 +139,18 @@ function wiggle(scene, source, time)
 	}, time);
 }
 
-function hearts(scene, source, time)
+function hearts(time)
 {
-	let vid = document.createElement('video');
-	videoElement.style.position = 'fixed';
-	videoElement.style.top = '0';
-	videoElement.style.left = '0';
-	videoElement.style.width = '100%';
-	videoElement.style.height = '100%';
-	videoElement.style.zIndex = '9999';
-	document.body.appendChild(videoElement);
-
-	videoElement.src = 'https://example.com/path/to/video.mp4';
-	videoElement.play();
-
-	setTimeout(function() {
-		document.body.removeChild(videoElement);
-	}, 10000);
+	const tt = setInterval(function(){
+		if (document.getElementById("heart").style.opacity == 0.5)
+			document.getElementById("heart").style.opacity = 0.1;
+		else
+			document.getElementById("heart").style.opacity = 0.5;
+	}, 500);
+	setTimeout(function(){
+		clearInterval(tt);
+		document.getElementById("heart").style.opacity = 0;
+	}, time);
 }
 
 function ri(min, max) {
@@ -166,9 +158,3 @@ function ri(min, max) {
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-function msg(text)
-{
-	document.getElementById("console").textContent = text;
-}
-  
